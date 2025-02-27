@@ -2,44 +2,42 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, SoftDeletes, HasApiTokens, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // Un utilisateur peut avoir un seul élève associé (s'il y a une relation)
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+    // Un utilisateur peut avoir un ou plusieurs enseignants associés
+    public function teachers()
+    {
+        return $this->hasMany(Teacher::class);
+    }
+
+    // Relation avec l'historique des connexions
+    public function logins()
+    {
+        // return $this->hasMany(LoginHistory::class); // À créer si vous suivez les connexions
+    }
+
+    // Accessors and Mutators
+    // Exemple d'un accessoir pour formater le nom de l'utilisateur
+    public function getFullNameAttribute()
+    {
+        return $this->name;
+    }
 }

@@ -1,66 +1,107 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+### **📌 README.md**
+```md
+# 🎓 Gestion Scolaire (API LARAVEL 10)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Un système de gestion scolaire développé avec **Laravel**, permettant la gestion des étudiants, enseignants, tuteurs et administrateurs.
 
-## About Laravel
+## 🚀 Fonctionnalités Principales
+- **Gestion des utilisateurs** (Étudiants, Enseignants, Tuteurs, Admins, Super-Admins)
+- **Gestion des années académiques** avec `softDeletes`
+- **Attribution des rôles et permissions** avec Spatie
+- **Envoi d’e-mails & notifications** lors de l'ajout d'un utilisateur
+- **Système d’authentification sécurisé** avec `Hash::make()`
+- **Gestion des notes et des classes**
+- **Tableau de bord admin** pour superviser toutes les activités
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ⚡ Installation & Configuration
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1️⃣ **Cloner le projet**
+```bash
+git clone https://github.com/nh-high-school.git
+cd nh-high-school
+```
 
-## Learning Laravel
+### 2️⃣ **Installation des dépendances**
+```bash
+composer install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 3️⃣ **Configuration de l'environnement**
+Copie le fichier `.env.example` et renomme-le en `.env` :
+```bash
+cp .env.example .env
+```
+Ensuite, configure la connexion à la base de données (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 4️⃣ **Générer la clé d’application**
+```bash
+php artisan key:generate
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 5️⃣ **Exécuter les migrations et seeders**
+```bash
+php artisan migrate --seed
+```
 
-## Laravel Sponsors
+### 6️⃣ **Lancer le serveur**
+```bash
+php artisan serve
+```
+L’application sera disponible sur `http://127.0.0.1:8000`.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 🔐 Gestion des Rôles et Permissions
+Ce projet utilise **Spatie Laravel Permissions** pour la gestion des rôles :
+- **Super-Admin** : Accès total, peut supprimer définitivement
+- **Admin** : Accès total sauf suppression définitive
+- **Enseignant** : Gère ses classes et les notes des élèves
+- **Tuteur** : Peut voir toutes les informations de ses enfants
+- **Étudiant** : Peut voir ses notes et ses informations de classe
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## 📧 Notifications et Emails
+- Lorsqu’un étudiant, un enseignant ou un tuteur est ajouté, un **email est envoyé** avec ses informations de connexion.
+- Une **notification est envoyée aux admins**.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 📜 API Endpoints
+| **Méthode** | **Endpoint**           | **Description**                  |
+|------------|------------------------|----------------------------------|
+| `POST`     | `/api/login`           | Connexion                       |
+| `GET`      | `/api/students`        | Liste des étudiants             |
+| `POST`     | `/api/students`        | Ajouter un étudiant             |
+| `PUT`      | `/api/students/{id}`   | Modifier un étudiant            |
+| `DELETE`   | `/api/students/{id}`   | Supprimer un étudiant (soft)    |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🛠 Technologies Utilisées
+- **Laravel 10**
+- **Spatie Laravel Permissions**
+- **MySQL**
+- **Mailtrap** (pour les emails en dev)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🎯 Contribuer
+1. **Fork** ce repo
+2. Crée une nouvelle branche : `git checkout -b feature-xyz`
+3. Fais tes modifications et commit : `git commit -m "Ajout de xyz"`
+4. Push sur ta branche : `git push origin feature-xyz`
+5. Crée une **Pull Request** 🛠️
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 📄 Licence
+Ce projet est sous licence **MIT**.
+
+---
+
+## 👨‍💻 Auteur
+Développé par **[Chrislain AVOCEGAN](https://github.com/RootCode2024)** 🚀.
+```
