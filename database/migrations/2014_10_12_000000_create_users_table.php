@@ -18,7 +18,16 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+
+            $table->dateTime('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
+            $table->integer('failed_logins')->default(0);
+            $table->dateTime('last_failed_login_at')->nullable();
+            $table->string('last_failed_login_ip')->nullable();
+
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 
